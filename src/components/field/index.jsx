@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {cpfMask,celMask} from '../../utils/masks'
-import MaskedInput from 'react-text-mask'
-import InputMask from 'react-input-mask'
 
 const GroupField = styled.div`
     margin-bottom: 22px;
@@ -24,16 +22,6 @@ const InputField = styled.input`
     padding: 15px;
 `
 
-const MaskedInputStyled = styled(MaskedInput)`
-background: #F2F2F2;
-border-radius: 8px;
-border: none;
-display:block;
-width: 100%;
-height:48px;
-padding: 15px;
-`
-
 export default class FormField extends Component {
     constructor(props) {
         super(props);
@@ -47,10 +35,10 @@ export default class FormField extends Component {
 
     onChangeData(e) {
         this.setState({ maskedValue: e.target.value});
-        if(e.target.name =='cpf') {
+        if(e.target.name ==='cpf') {
             this.setState({ maskedValue: cpfMask(e.target.value) });
         }
-        if(e.target.name =='celphone') {
+        if(e.target.name ==='celphone') {
             this.setState({ maskedValue: celMask(e.target.value) });
 
         }

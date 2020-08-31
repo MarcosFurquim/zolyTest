@@ -44,6 +44,14 @@ const BreadCrumbStyled = styled.div`
                     content: "›";
                 }
             }
+            @media (max-width: 991px) {
+                font-size: 0;
+                &:not(:last-of-type):after {
+                    font-size: 16px;
+                    padding-left: 2rem;
+                    padding-right: 2rem;
+                }
+            }
         }
     }
     

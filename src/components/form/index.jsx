@@ -25,8 +25,14 @@ const ButtonSubmitStyled = styled.input`
 export default class FormZoly extends Component {
     constructor(props) {
         super(props)
+        console.log('form',props);
         this.state = {} 
-      }
+    }
+    handleSubmit = e => {
+        console.log('submiting...');
+        this.setState({message: 'Sending...' }, this.submitForm(e));
+        console.log(this.props);
+    }
     handleData = formData => {
         var obj = {};
         for (var key of formData.keys()) {
@@ -35,26 +41,27 @@ export default class FormZoly extends Component {
         return obj;
     }
     submitForm = e => {
-    e.preventDefault();
-    console.log(this,e.target);
-    var data = this.handleData(new FormData(e.target));
-    console.log(data);
-    fetch(`https://api-modelo-teste.tkoa.me/customer`, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then(res => res.json())
-        .then(data => console.log(data))
-        .catch(err => console.error("Error:", err));
+        e.preventDefault();
+        
+        var data = this.handleData(new FormData(e.target));
+        this.props.handler(data,data,data);
+
+        fetch(`https://api-modelo-teste.tkoa.me/customer`, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.error("Error:", err));
     }
     render() {
         return (
-            <FormStyled method="post" onSubmit={this.submitForm.bind(this)}>
+            <FormStyled method="post" onSubmit={this.handleSubmit.bind(this)}>
                 <h2>Olá! Preencha seus dados</h2>
                 <p>Preencha o formulário abaixo para registrar seu interesse neste produto</p>
-                <FormField label="Nome completo*" name="nome" required pattern="^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]{2,40}(?: +[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]{2,40})+$"></FormField>
+                <FormField label="Nome completo*" name="name" required pattern="^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]{2,40}(?: +[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]{2,40})+$"></FormField>
                 <FormField label="Seu e-mail*" name="email" required type="mail"></FormField>
                 <FormField label="Seu celular*" name="celphone" maxLength='13' placeholder="(00) 00000 0000"  required></FormField>
                 <FormField label="CPF*" name="cpf" maxLength='14'  placeholder="000.000.000-00"  required ></FormField>
